@@ -17,7 +17,7 @@ A modern React application for compressing and optimizing images with a clean, r
 - React.js with TypeScript
 - Redux Toolkit for state management
 - Styled Components for styling
-- browser-image-compression for image optimization
+- Browser-image-compression for image optimization
 - React Dropzone for file uploading
 
 ## Getting Started
@@ -70,16 +70,6 @@ yarn build
 ```
 
 This will create a `build` folder with optimized production files.
-
-## Deployment
-
-This is a static application that can be deployed to any static site hosting platform like:
-
-- GitHub Pages
-- Netlify
-- Vercel
-- Firebase Hosting
-- AWS S3
 
 ## How It Works
 
