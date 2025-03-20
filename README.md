@@ -1,46 +1,114 @@
-# Getting Started with Create React App
+# Image Shrink
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React application for compressing and optimizing images with a clean, responsive user interface.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Drag and drop interface for easy image uploading
+- Client-side image compression (no data is sent to any server)
+- Adjustable compression settings (target size and resolution)
+- Side-by-side comparison of original and compressed images
+- Size reduction statistics
+- Download compressed images with a single click
+- Fully responsive design for all device sizes
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React.js with TypeScript
+- Redux Toolkit for state management
+- Styled Components for styling
+- browser-image-compression for image optimization
+- React Dropzone for file uploading
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (v14.0.0 or higher)
+- npm or yarn
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/image-compressor.git
+   cd image-compressor
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies:
+   ```
+   npm install
+   ```
+   or
+   ```
+   yarn install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Start the development server:
+   ```
+   npm start
+   ```
+   or
+   ```
+   yarn start
+   ```
 
-### `npm run eject`
+4. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Build for Production
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To build the app for production, run:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+npm run build
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+or
 
-## Learn More
+```
+yarn build
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This will create a `build` folder with optimized production files.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deployment
+
+This is a static application that can be deployed to any static site hosting platform like:
+
+- GitHub Pages
+- Netlify
+- Vercel
+- Firebase Hosting
+- AWS S3
+
+## How It Works
+
+The application uses browser-image-compression to compress images directly in the browser. The compression process:
+
+1. Reduces file size by optimizing the image quality
+2. Optionally scales down the resolution if it exceeds the maximum dimensions
+3. Maintains the original aspect ratio
+4. Works with JPG, PNG, GIF, and WebP formats
+
+## Privacy
+
+All processing happens directly in your browser. No images are uploaded to any server, ensuring complete privacy.
+
+## Note on Fonts
+
+The application uses specific fonts for its UI. If you don't have the same fonts installed on your system, the application might not display exactly as expected. For the best experience, ensure you have the required fonts installed or use the web-hosted version.
+
+## License
+
+MIT License
+
+## Acknowledgements
+
+- [browser-image-compression](https://github.com/Donaldcwl/browser-image-compression)
+- [React Dropzone](https://react-dropzone.js.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Styled Components](https://styled-components.com/)
+
+## Author
+
+Developed by Haro Abdulah
