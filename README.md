@@ -78,7 +78,7 @@ The application uses browser-image-compression to compress images directly in th
 1. Reduces file size by optimizing the image quality
 2. Optionally scales down the resolution if it exceeds the maximum dimensions
 3. Maintains the original aspect ratio
-4. Works with JPG, PNG, GIF, and WebP formats
+4. Works with JPG, PNG, and WebP formats
 
 ## Privacy
 
