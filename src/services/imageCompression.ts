@@ -23,6 +23,14 @@ export const compressImage = async (
   }
 ): Promise<{ compressedFile: File; compressedUrl: string; wasAlreadyOptimal?: boolean }> => {
   try {
+    // Check if file is GIF and reject it
+    const fileType = file.type.toLowerCase();
+    const fileName = file.name.toLowerCase();
+    
+    if (fileType === 'image/gif' || fileName.endsWith('.gif')) {
+      throw new Error('GIF format is not supported. Please use JPG, PNG, or WebP formats.');
+    }
+    
     // Check filename for "optimized-" prefix to detect previously compressed images
     const isAlreadyCompressed = file.name.startsWith('optimized-');
     

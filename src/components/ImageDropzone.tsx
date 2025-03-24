@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 import { useAppDispatch } from '../hooks/useRedux';
 import { setOriginalImage } from '../store/imageSlice';
+import { setError } from '../store/imageSlice';
 
 interface DropContainerProps {
   isDragActive: boolean;
@@ -108,6 +109,25 @@ const ImageDropzone: React.FC = () => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
+      
+      // Explicitly check file type to ensure no GIFs are processed
+      const fileType = file.type.toLowerCase();
+      const fileName = file.name.toLowerCase();
+      
+      // Only allow jpg, jpeg, png, and webp
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      const isGif = fileType === 'image/gif' || fileName.endsWith('.gif');
+      
+      if (isGif) {
+        dispatch(setError('GIF files are not supported. Please use JPG, PNG or WebP formats.'));
+        return;
+      }
+      
+      if (!allowedTypes.includes(fileType)) {
+        dispatch(setError('Unsupported file format. Please use JPG, PNG or WebP formats.'));
+        return;
+      }
+      
       const reader = new FileReader();
       
       reader.onloadend = () => {
@@ -124,7 +144,9 @@ const ImageDropzone: React.FC = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
+      'image/jpeg': ['.jpeg', '.jpg'],
+      'image/png': ['.png'],
+      'image/webp': ['.webp']
     },
     maxFiles: 1
   });
@@ -144,7 +166,7 @@ const ImageDropzone: React.FC = () => {
           <DropText>Drag & drop an image here, or click to select</DropText>
         )}
         <AcceptedFormats>
-          Accepts: JPG, PNG, GIF, WEBP
+          Accepts: JPG, PNG, WEBP
         </AcceptedFormats>
       </Content>
     </DropContainer>
