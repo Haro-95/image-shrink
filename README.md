@@ -31,8 +31,8 @@ A modern React application for compressing and optimizing images with a clean, r
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/image-compressor.git
-   cd image-compressor
+   git clone https://github.com/Haro-95/image-shrink.git
+   cd image-shrink
    ```
 
 2. Install dependencies:
