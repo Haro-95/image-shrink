@@ -23,6 +23,7 @@ const ImageCard = styled.div`
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
   
   &:hover {
     transform: translateY(-5px);
@@ -48,6 +49,13 @@ const ImageTitle = styled.h3`
 const ImageContent = styled.div`
   padding: 1rem;
   text-align: center;
+  position: relative;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
 `;
 
 const StyledImage = styled.img`
@@ -55,6 +63,36 @@ const StyledImage = styled.img`
   max-height: 300px;
   border-radius: 0.5rem;
   object-fit: contain;
+`;
+
+const DownloadButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #6366f1;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  z-index: 10;
+  
+  &:hover {
+    background-color: #6366f1;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 const ImageInfo = styled.div`
@@ -89,6 +127,14 @@ const ReductionBadge = styled.span<{ reduction: number; isOptimal?: boolean }>`
   }};
 `;
 
+const DownloadIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
 const formatSize = (bytes: number): string => {
   if (bytes < 1024) {
     return bytes + ' bytes';
@@ -112,6 +158,17 @@ const ImagePreview: React.FC = () => {
     ? calculateReduction(originalSize, compressedSize)
     : 0;
 
+  const handleDownload = () => {
+    if (!compressedImage) return;
+    
+    const link = document.createElement('a');
+    link.href = compressedImage;
+    link.download = `optimized-${originalImage?.name || 'image'}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <PreviewContainer>
       <ImageCard>
@@ -132,7 +189,15 @@ const ImagePreview: React.FC = () => {
             <ImageTitle>Compressed</ImageTitle>
           </ImageHeader>
           <ImageContent>
-            <StyledImage src={compressedImage} alt="Compressed" />
+            <ImageWrapper>
+              <StyledImage src={compressedImage} alt="Compressed" />
+              <DownloadButton 
+                onClick={handleDownload} 
+                title="Download compressed image"
+              >
+                <DownloadIcon />
+              </DownloadButton>
+            </ImageWrapper>
           </ImageContent>
           <ImageInfo>
             <SizeInfo>Size: {formatSize(compressedSize || 0)}</SizeInfo>

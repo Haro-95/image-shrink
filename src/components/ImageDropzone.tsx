@@ -12,12 +12,12 @@ interface DropContainerProps {
 const DropContainer = styled.div<DropContainerProps>`
   border: 2px dashed ${props => props.isDragActive ? '#6366f1' : '#d1d5db'};
   border-radius: 16px;
-  padding: 2.5rem 2rem;
+  padding: 1.75rem 2rem;
   text-align: center;
   transition: all 0.3s ease;
   background-color: ${props => props.isDragActive ? 'rgba(99, 102, 241, 0.05)' : 'white'};
   cursor: pointer;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   position: relative;
   overflow: hidden;
@@ -29,7 +29,7 @@ const DropContainer = styled.div<DropContainerProps>`
   }
   
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
   }
 `;
 

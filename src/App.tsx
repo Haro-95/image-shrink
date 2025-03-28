@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import ImageDropzone from './components/ImageDropzone';
 import ImagePreview from './components/ImagePreview';
 import CompressionControls from './components/CompressionControls';
+import FormatSelector from './components/FormatSelector';
 
 const AppContainer = styled.div`
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -16,11 +17,17 @@ const AppContainer = styled.div`
   margin: 0 auto;
   padding: 0 1.5rem;
   background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 `;
 
 const Main = styled.main`
-  min-height: calc(100vh - 200px);
+  flex: 1;
   padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 function App() {
@@ -28,6 +35,7 @@ function App() {
     <Provider store={store}>
       <AppContainer>
         <Header />
+        <FormatSelector />
         <Main>
           <ImageDropzone />
           <ImagePreview />

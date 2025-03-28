@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
   text-align: center;
-  padding: 2rem 1.5rem;
-  margin-top: 3rem;
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
   border-top: 1px solid #f3f4f6;
   color: #6b7280;
   background-color: white;
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
         &copy; {year} ImageShrink - Free, fast image compression
       </Text>
       <Text>
-        <Link href="https://github.com/your-username/image-compressor" target="_blank" rel="noopener noreferrer">
+        <Link href="https://github.com/Haro-95/image-shrink" target="_blank" rel="noopener noreferrer">
           View on GitHub
         </Link>
       </Text>

@@ -6,9 +6,9 @@ import { compressImage } from '../services/imageCompression';
 
 const ControlsContainer = styled.div`
   background-color: white;
-  padding: 2.5rem 2rem;
+  padding: 1.5rem 2rem;
   border-radius: 1rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   text-align: center;
   position: relative;
@@ -26,8 +26,8 @@ const ControlsContainer = styled.div`
 `;
 
 const Title = styled.h3`
-  margin-top: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
   color: #111827;
   font-size: 1.25rem;
   font-weight: 600;
@@ -35,9 +35,9 @@ const Title = styled.h3`
 
 const Description = styled.p`
   color: #6b7280;
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -46,7 +46,7 @@ const Description = styled.p`
 const QualityBadge = styled.span`
   display: inline-flex;
   align-items: center;
-  margin: 0 auto 2rem;
+  margin: 0 auto 1.25rem;
   padding: 0.4rem 0.8rem;
   background-color: rgba(99, 102, 241, 0.1);
   color: #4f46e5;
