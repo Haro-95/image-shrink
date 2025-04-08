@@ -1,104 +1,91 @@
-# Image Shrink
+# ImageShrink
 
-A modern React application for compressing and optimizing images with a clean, responsive user interface.
+A modern image compression web application with a focus on quality.
 
 ## Features
 
-- Drag and drop interface for easy image uploading
-- Client-side image compression (no data is sent to any server)
-- Adjustable compression settings (target size and resolution)
-- Side-by-side comparison of original and compressed images
-- Size reduction statistics
-- Download compressed images with a single click
-- Fully responsive design for all device sizes
-
-## Technologies Used
-
-- React.js with TypeScript
-- Redux Toolkit for state management
-- Styled Components for styling
-- Browser-image-compression for image optimization
-- React Dropzone for file uploading
+- High-quality image compression with minimal quality loss
+- Supports JPG, PNG, and WebP formats
+- Client-side processing (your images never leave your browser)
+- Preserves original image dimensions
+- Clean, intuitive user interface
+- Shows compression statistics and savings
+- Works entirely in the browser - no server uploads required
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14.0.0 or higher)
-- npm or yarn
+- Node.js 14+ and npm
 
 ### Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/Haro-95/image-shrink.git
-   cd image-shrink
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
-   ```
-   or
-   ```
-   yarn install
-   ```
-
-3. Start the development server:
-   ```
-   npm start
-   ```
-   or
-   ```
-   yarn start
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
-
-## Build for Production
-
-To build the app for production, run:
-
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/image-shrink.git
+cd image-shrink
 ```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Start development server
+```bash
+npm start
+```
+
+4. Build for production
+```bash
 npm run build
 ```
 
-or
+## Technology Stack
+
+- React 19
+- TypeScript
+- Redux Toolkit
+- browser-image-compression for optimizing images
+- Styled Components for styling
+- React Dropzone for file handling
+
+## Project Structure
 
 ```
-yarn build
+image-shrink/
+├── public/           # Static files
+├── src/              # Source code
+│   ├── components/   # React components
+│   ├── hooks/        # Custom React hooks
+│   ├── services/     # Application services
+│   ├── store/        # Redux state management
+│   ├── types/        # TypeScript type definitions
+│   ├── App.tsx       # Main application component
+│   └── index.tsx     # Application entry point
+└── package.json      # Project dependencies and scripts
 ```
-
-This will create a `build` folder with optimized production files.
 
 ## How It Works
 
-The application uses browser-image-compression to compress images directly in the browser. The compression process:
+1. Upload an image via drag-and-drop or file selection
+2. The app compresses the image in the browser using the browser-image-compression library
+3. Compression preserves original dimensions while reducing file size
+4. The app shows both original and compressed versions for comparison
+5. You can download the compressed image or compress another
 
-1. Reduces file size by optimizing the image quality
-2. Optionally scales down the resolution if it exceeds the maximum dimensions
-3. Maintains the original aspect ratio
-4. Works with JPG, PNG, and WebP formats
+## Future Features
 
-## Privacy
-
-All processing happens directly in your browser. No images are uploaded to any server, ensuring complete privacy.
-
-## Note on Fonts
-
-The application uses specific fonts for its UI. If you don't have the same fonts installed on your system, the application might not display exactly as expected. For the best experience, ensure you have the required fonts installed or use the web-hosted version.
+- Document compression
+- PDF optimization
+- Video compression
+- Audio optimization
+- Batch processing
 
 ## License
 
-MIT License
+MIT
 
-## Acknowledgements
+## Contributing
 
-- [browser-image-compression](https://github.com/Donaldcwl/browser-image-compression)
-- [React Dropzone](https://react-dropzone.js.org/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [Styled Components](https://styled-components.com/)
-
-## Author
-
-Developed by Haro Abdulah
+Contributions are welcome! Please feel free to submit a Pull Request.

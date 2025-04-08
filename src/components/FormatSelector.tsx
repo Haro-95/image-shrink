@@ -9,32 +9,32 @@ const FormatSelectorContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const FormatOption = styled.div<{ active?: boolean }>`
+const FormatOption = styled.div<{ $active?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: ${props => props.active ? 'pointer' : 'default'};
-  opacity: ${props => props.active ? 1 : 0.7};
+  cursor: ${props => props.$active ? 'pointer' : 'default'};
+  opacity: ${props => props.$active ? 1 : 0.7};
   transition: all 0.2s ease;
   position: relative;
   padding: 0.5rem;
   
   &:hover {
-    transform: ${props => props.active ? 'translateY(-5px)' : 'none'};
+    transform: ${props => props.$active ? 'translateY(-5px)' : 'none'};
   }
 `;
 
-const IconContainer = styled.div<{ active?: boolean }>`
+const IconContainer = styled.div<{ $active?: boolean }>`
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: ${props => props.active ? '#6366f1' : '#e5e7eb'};
+  background: ${props => props.$active ? '#6366f1' : '#e5e7eb'};
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 0.5rem;
-  color: ${props => props.active ? 'white' : '#6b7280'};
-  box-shadow: ${props => props.active ? '0 4px 12px rgba(99, 102, 241, 0.25)' : 'none'};
+  color: ${props => props.$active ? 'white' : '#6b7280'};
+  box-shadow: ${props => props.$active ? '0 4px 12px rgba(99, 102, 241, 0.25)' : 'none'};
   transition: all 0.2s ease;
 `;
 
@@ -107,8 +107,8 @@ const AudioIcon = () => (
 const FormatSelector: React.FC = () => {
   return (
     <FormatSelectorContainer>
-      <FormatOption active={true}>
-        <IconContainer active={true}>
+      <FormatOption $active={true}>
+        <IconContainer $active={true}>
           <ImageIcon />
         </IconContainer>
         <FormatLabel>Images</FormatLabel>

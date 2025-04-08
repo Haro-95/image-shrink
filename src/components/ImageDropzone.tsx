@@ -1,21 +1,21 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
-import { useAppDispatch } from '../hooks/useRedux';
+import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { setOriginalImage } from '../store/imageSlice';
 import { setError } from '../store/imageSlice';
 
 interface DropContainerProps {
-  isDragActive: boolean;
+  $isDragActive: boolean;
 }
 
 const DropContainer = styled.div<DropContainerProps>`
-  border: 2px dashed ${props => props.isDragActive ? '#6366f1' : '#d1d5db'};
+  border: 2px dashed ${props => props.$isDragActive ? '#6366f1' : '#d1d5db'};
   border-radius: 16px;
   padding: 1.75rem 2rem;
   text-align: center;
   transition: all 0.3s ease;
-  background-color: ${props => props.isDragActive ? 'rgba(99, 102, 241, 0.05)' : 'white'};
+  background-color: ${props => props.$isDragActive ? 'rgba(99, 102, 241, 0.05)' : 'white'};
   cursor: pointer;
   margin-bottom: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
@@ -96,6 +96,17 @@ const AcceptedFormats = styled.p`
   margin-top: 0.75rem;
 `;
 
+const UploadNewHint = styled.p`
+  font-size: 0.875rem;
+  color: #6366f1;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  background-color: rgba(99, 102, 241, 0.08);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+`;
+
 const CameraIcon = () => (
   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M6.5 5.5L9 2.5H15L17.5 5.5H21.5C22.0523 5.5 22.5 5.94772 22.5 6.5V19.5C22.5 20.0523 22.0523 20.5 21.5 20.5H2.5C1.94772 20.5 1.5 20.0523 1.5 19.5V6.5C1.5 5.94772 1.94772 5.5 2.5 5.5H6.5Z" stroke="#6366f1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -105,6 +116,7 @@ const CameraIcon = () => (
 
 const ImageDropzone: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { compressedImage } = useAppSelector(state => state.image);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
@@ -152,7 +164,7 @@ const ImageDropzone: React.FC = () => {
   });
 
   return (
-    <DropContainer {...getRootProps()} isDragActive={isDragActive}>
+    <DropContainer {...getRootProps()} $isDragActive={isDragActive}>
       <AnimatedCircle />
       <AnimatedCircle />
       <Content>
@@ -163,7 +175,16 @@ const ImageDropzone: React.FC = () => {
         {isDragActive ? (
           <DropText>Drop your image here...</DropText>
         ) : (
-          <DropText>Drag & drop an image here, or click to select</DropText>
+          <>
+            <DropText>
+              {compressedImage 
+                ? 'Drop a new image to compress' 
+                : 'Drag & drop an image here, or click to select'}
+            </DropText>
+            {compressedImage && 
+              <UploadNewHint>Upload new image to start over</UploadNewHint>
+            }
+          </>
         )}
         <AcceptedFormats>
           Accepts: JPG, PNG, WEBP

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { setCompressedImage, startCompressing, setError } from '../store/imageSlice';
+import { setCompressedImage, startCompressing, setError, resetState } from '../store/imageSlice';
 import { compressImage } from '../services/imageCompression';
 
 const ControlsContainer = styled.div`
@@ -157,11 +157,23 @@ const LoadingButton = styled(Button)`
 
 const DownloadButton = styled(Button)`
   background: linear-gradient(45deg, #059669, #10b981);
-  animation: ${pulse} 2s infinite;
+  animation: none;
   
   &:hover {
     background: linear-gradient(45deg, #047857, #059669);
     box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+  }
+`;
+
+const AnotherImageButton = styled(Button)`
+  background: white;
+  color: #6366f1;
+  border: 2px solid #6366f1;
+  box-shadow: none;
+  
+  &:hover {
+    background: rgba(99, 102, 241, 0.05);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
   }
 `;
 
@@ -214,6 +226,23 @@ const QualityIcon = () => (
   </svg>
 );
 
+const DownloadIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
+const RefreshIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+    <path d="M21 3v5h-5" />
+    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+    <path d="M3 21v-5h5" />
+  </svg>
+);
+
 const CompressionControls: React.FC = () => {
   const dispatch = useAppDispatch();
   const { originalImage, compressedImage, isCompressing, error } = useAppSelector(state => state.image);
@@ -248,46 +277,59 @@ const CompressionControls: React.FC = () => {
     link.click();
     document.body.removeChild(link);
   };
+  
+  const handleCompressAnotherClick = () => {
+    // Reset state to compress another image
+    dispatch(resetState());
+  };
 
   if (!originalImage) return null;
 
   return (
     <ControlsContainer>
-      <Title>Premium Image Compression</Title>
+      <Title>Optimize Your Image</Title>
       <Description>
-        Our algorithm intelligently compresses your image while preserving
-        maximum quality. We prioritize crystal-clear results, even if it means
-        less size reduction.
+        Our smart compression engine will automatically optimize your image with the best quality settings while reducing file size.
       </Description>
-      
       <QualityBadge>
-        <QualityIcon /> Maximum Quality Preserved
+        <QualityIcon /> High Quality Optimization
       </QualityBadge>
       
       <ButtonContainer>
-        {isCompressing ? (
-          <LoadingButton disabled>
-            <ButtonText>
-              <LoadingSpinner /> Optimizing with care...
-            </ButtonText>
-          </LoadingButton>
+        {!compressedImage ? (
+          isCompressing ? (
+            <LoadingButton disabled>
+              <ButtonText>
+                <LoadingSpinner /> Compressing...
+              </ButtonText>
+            </LoadingButton>
+          ) : (
+            <Button 
+              onClick={handleCompressClick} 
+              disabled={!originalImage || isCompressing}
+            >
+              <ButtonText>Compress Image</ButtonText>
+            </Button>
+          )
         ) : (
-          <Button 
-            onClick={handleCompressClick} 
-            disabled={isCompressing}
-          >
-            Compress Image
-          </Button>
-        )}
-        
-        {compressedImage && (
-          <DownloadButton onClick={handleDownloadClick}>
-            Download Optimized Image
-          </DownloadButton>
+          <>
+            <DownloadButton onClick={handleDownloadClick}>
+              <ButtonText>
+                <DownloadIcon /> Download Image
+              </ButtonText>
+            </DownloadButton>
+            <AnotherImageButton onClick={handleCompressAnotherClick}>
+              <ButtonText>
+                <RefreshIcon /> Compress Another Image
+              </ButtonText>
+            </AnotherImageButton>
+          </>
         )}
       </ButtonContainer>
       
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && (
+        <ErrorMessage>{error}</ErrorMessage>
+      )}
     </ControlsContainer>
   );
 };

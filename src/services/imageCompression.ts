@@ -1,25 +1,43 @@
 import imageCompression from 'browser-image-compression';
 
+/**
+ * Interface for image compression options
+ */
 export interface CompressionOptions {
+  /** Maximum file size in MB */
   maxSizeMB: number;
+  /** Maximum width or height in pixels (preserves aspect ratio) */
   maxWidthOrHeight?: number;
+  /** Whether to use web worker for compression */
   useWebWorker?: boolean;
+  /** Initial quality (0-1) for compression */
   initialQuality?: number;
+  /** Maximum iteration count for quality adjustment */
   maxIteration?: number;
+  /** Whether to keep original resolution */
   alwaysKeepResolution?: boolean;
+  /** EXIF orientation to preserve */
   exifOrientation?: number;
+  /** Desired output file type */
   fileType?: string;
+  /** Progress callback function */
   onProgress?: (progress: number) => void;
 }
 
+/**
+ * Compresses an image file with quality-focused settings
+ * 
+ * @param file - The original image file to compress
+ * @param options - Compression options (optional)
+ * @returns Promise containing the compressed file, URL, and optimization status
+ */
 export const compressImage = async (
   file: File,
   options: CompressionOptions = {
     maxSizeMB: 1,
-    maxWidthOrHeight: 2560,
     useWebWorker: true,
     initialQuality: 0.8,
-    alwaysKeepResolution: false
+    alwaysKeepResolution: true // Default to keeping resolution
   }
 ): Promise<{ compressedFile: File; compressedUrl: string; wasAlreadyOptimal?: boolean }> => {
   try {
@@ -54,8 +72,8 @@ export const compressImage = async (
       qualityFocusedOptions.maxSizeMB = originalSizeMB * (isAlreadyCompressed ? 0.92 : 0.95); // Only 5-8% reduction
     }
     
-    // Increase resolution limit to preserve details
-    qualityFocusedOptions.maxWidthOrHeight = 3840; // 4K resolution support
+    // Remove any width/height limitation to preserve original dimensions
+    delete qualityFocusedOptions.maxWidthOrHeight;
     
     console.log('Using quality-focused compression settings:', qualityFocusedOptions);
     
@@ -89,6 +107,11 @@ export const compressImage = async (
     return { compressedFile, compressedUrl };
   } catch (error) {
     console.error('Error compressing image:', error);
-    throw error;
+    // Re-throw with a more user-friendly message
+    if (error instanceof Error) {
+      throw new Error(`Failed to compress image: ${error.message}`);
+    } else {
+      throw new Error('Failed to compress image: Unknown error');
+    }
   }
 }; 

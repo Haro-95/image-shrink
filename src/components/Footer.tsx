@@ -3,90 +3,71 @@ import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
   text-align: center;
-  padding: 1rem 1.5rem;
-  margin-top: 1rem;
-  border-top: 1px solid #f3f4f6;
+  padding: 2rem 0;
   color: #6b7280;
-  background-color: white;
-  border-radius: 1rem 1rem 0 0;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+  font-size: 0.9rem;
+  margin-top: auto;
 `;
 
-const Text = styled.p`
-  margin: 0 0 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-`;
-
-const Link = styled.a`
-  color: #6366f1;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  position: relative;
-  
-  &:hover {
-    color: #4f46e5;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease;
-  }
-  
-  &:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
+const Copyright = styled.p`
+  margin: 0.5rem 0;
 `;
 
 const SocialLinks = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 `;
 
 const SocialLink = styled.a`
   color: #6b7280;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
   
   &:hover {
     color: #6366f1;
   }
 `;
 
-const Footer: React.FC = () => {
-  const year = new Date().getFullYear();
+const GitHubLink = styled.a`
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 500;
   
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const TwitterIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84 0 0 0 .497-3.753c0-.249 1.51-2.772 1.818-4.013v.001z" />
+  </svg>
+);
+
+const LinkedInIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const Footer: React.FC = () => {
   return (
     <FooterContainer>
-      <Text>
-        &copy; {year} ImageShrink - Free, fast image compression
-      </Text>
-      <Text>
-        <Link href="https://github.com/Haro-95/image-shrink" target="_blank" rel="noopener noreferrer">
+      <Copyright>© 2023 ImageShrink - Free, fast image compression</Copyright>
+      <div>
+        <GitHubLink href="https://github.com" target="_blank" rel="noopener noreferrer">
           View on GitHub
-        </Link>
-      </Text>
+        </GitHubLink>
+      </div>
       <SocialLinks>
-        <SocialLink href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
-          </svg>
+        <SocialLink href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <TwitterIcon />
         </SocialLink>
-        <SocialLink href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
-          </svg>
+        <SocialLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <LinkedInIcon />
         </SocialLink>
       </SocialLinks>
     </FooterContainer>

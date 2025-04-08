@@ -5,7 +5,7 @@ import { useAppSelector } from '../hooks/useRedux';
 const PreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   margin-bottom: 2.5rem;
   gap: 1.5rem;
   
@@ -50,12 +50,17 @@ const ImageContent = styled.div`
   padding: 1rem;
   text-align: center;
   position: relative;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ImageWrapper = styled.div`
   position: relative;
   display: inline-block;
   margin: 0 auto;
+  max-height: 100%;
 `;
 
 const StyledImage = styled.img`
@@ -96,7 +101,6 @@ const DownloadButton = styled.button`
 `;
 
 const ImageInfo = styled.div`
-  margin-top: 1rem;
   padding: 1rem 1.5rem;
   border-top: 1px solid #f3f4f6;
   color: #4b5563;
@@ -110,20 +114,20 @@ const SizeInfo = styled.div`
   font-weight: 500;
 `;
 
-const ReductionBadge = styled.span<{ reduction: number; isOptimal?: boolean }>`
+const ReductionBadge = styled.span<{ $reduction: number; $isOptimal?: boolean }>`
   display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.75rem;
   background-color: ${props => {
-    if (props.isOptimal) return '#8b5cf6'; // Purple for already optimal
-    return props.reduction > 0 ? '#10b981' : '#ef4444'; // Green for reduction, red for larger
+    if (props.$isOptimal) return '#8b5cf6'; // Purple for already optimal
+    return props.$reduction > 0 ? '#10b981' : '#ef4444'; // Green for reduction, red for larger
   }};
   color: white;
   box-shadow: 0 2px 5px ${props => {
-    if (props.isOptimal) return 'rgba(139, 92, 246, 0.3)'; // Purple shadow
-    return props.reduction > 0 ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)';
+    if (props.$isOptimal) return 'rgba(139, 92, 246, 0.3)'; // Purple shadow
+    return props.$reduction > 0 ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)';
   }};
 `;
 
@@ -201,7 +205,7 @@ const ImagePreview: React.FC = () => {
           </ImageContent>
           <ImageInfo>
             <SizeInfo>Size: {formatSize(compressedSize || 0)}</SizeInfo>
-            <ReductionBadge reduction={reduction} isOptimal={wasAlreadyOptimal}>
+            <ReductionBadge $reduction={reduction} $isOptimal={wasAlreadyOptimal}>
               {wasAlreadyOptimal
                 ? "Already Optimal"
                 : reduction > 0 
