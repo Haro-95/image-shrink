@@ -22,8 +22,7 @@ A modern image compression web application with a focus on quality.
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/image-shrink.git
-cd image-shrink
+git clone https://github.com/Haro-95/image-shrink.git
 ```
 
 2. Install dependencies
@@ -39,31 +38,6 @@ npm start
 4. Build for production
 ```bash
 npm run build
-```
-
-## Technology Stack
-
-- React 19
-- TypeScript
-- Redux Toolkit
-- browser-image-compression for optimizing images
-- Styled Components for styling
-- React Dropzone for file handling
-
-## Project Structure
-
-```
-image-shrink/
-├── public/           # Static files
-├── src/              # Source code
-│   ├── components/   # React components
-│   ├── hooks/        # Custom React hooks
-│   ├── services/     # Application services
-│   ├── store/        # Redux state management
-│   ├── types/        # TypeScript type definitions
-│   ├── App.tsx       # Main application component
-│   └── index.tsx     # Application entry point
-└── package.json      # Project dependencies and scripts
 ```
 
 ## How It Works
@@ -85,6 +59,10 @@ image-shrink/
 ## License
 
 MIT
+
+## Author
+
+Developed by Haro Abdulah
 
 ## Contributing
 
