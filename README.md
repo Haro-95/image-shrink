@@ -48,17 +48,13 @@ npm run build
 4. The app shows both original and compressed versions for comparison
 5. You can download the compressed image or compress another
 
-## Future Features
+## Future Upgrades
 
 - Document compression
 - PDF optimization
 - Video compression
 - Audio optimization
 - Batch processing
-
-## License
-
-MIT
 
 ## Author
 
