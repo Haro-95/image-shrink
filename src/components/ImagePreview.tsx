@@ -154,27 +154,45 @@ const calculateReduction = (original: number, compressed: number): number => {
 };
 
 const ImagePreview: React.FC = () => {
-  const { originalImage, originalSize, compressedImage, compressedSize, wasAlreadyOptimal } = useAppSelector(state => state.image);
+  const { 
+    originalImage, 
+    originalSize, 
+    compressedImage, 
+    compressedSize, 
+    croppedImage,
+    croppedSize,
+    processingMode,
+    wasAlreadyOptimal 
+  } = useAppSelector(state => state.image);
 
   if (!originalImage) return null;
 
-  const reduction = originalSize && compressedSize 
-    ? calculateReduction(originalSize, compressedSize)
+  // Determine which processed image to show based on mode
+  const processedImage = processingMode === 'crop' ? croppedImage : compressedImage;
+  const processedSize = processingMode === 'crop' ? croppedSize : compressedSize;
+  const processedTitle = processingMode === 'crop' ? 'Cropped' : 'Compressed';
+  
+  // In crop mode, only show comparison when cropping is complete
+  if (processingMode === 'crop' && !croppedImage) return null;
+
+  const reduction = originalSize && processedSize 
+    ? calculateReduction(originalSize, processedSize)
     : 0;
 
   const handleDownload = () => {
-    if (!compressedImage) return;
+    if (!processedImage) return;
     
     const link = document.createElement('a');
-    link.href = compressedImage;
-    link.download = `optimized-${originalImage?.name || 'image'}`;
+    link.href = processedImage;
+    const prefix = processingMode === 'crop' ? 'cropped' : 'optimized';
+    link.download = `${prefix}-${originalImage?.name || 'image'}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <PreviewContainer>
+    <PreviewContainer data-testid="image-preview">
       <ImageCard>
         <ImageHeader>
           <ImageTitle>Original</ImageTitle>
@@ -187,31 +205,38 @@ const ImagePreview: React.FC = () => {
         </ImageInfo>
       </ImageCard>
 
-      {compressedImage && (
+      {processedImage && (
         <ImageCard>
           <ImageHeader>
-            <ImageTitle>Compressed</ImageTitle>
+            <ImageTitle>{processedTitle}</ImageTitle>
           </ImageHeader>
           <ImageContent>
             <ImageWrapper>
-              <StyledImage src={compressedImage} alt="Compressed" />
+              <StyledImage src={processedImage} alt={processedTitle} />
               <DownloadButton 
                 onClick={handleDownload} 
-                title="Download compressed image"
+                title={`Download ${processedTitle.toLowerCase()} image`}
               >
                 <DownloadIcon />
               </DownloadButton>
             </ImageWrapper>
           </ImageContent>
           <ImageInfo>
-            <SizeInfo>Size: {formatSize(compressedSize || 0)}</SizeInfo>
-            <ReductionBadge $reduction={reduction} $isOptimal={wasAlreadyOptimal}>
-              {wasAlreadyOptimal
-                ? "Already Optimal"
-                : reduction > 0 
-                  ? `${reduction.toFixed(1)}% smaller` 
-                  : `${Math.abs(reduction).toFixed(1)}% larger`}
-            </ReductionBadge>
+            <SizeInfo>Size: {formatSize(processedSize || 0)}</SizeInfo>
+            {processingMode === 'compress' && (
+              <ReductionBadge $reduction={reduction} $isOptimal={wasAlreadyOptimal}>
+                {wasAlreadyOptimal
+                  ? "Already Optimal"
+                  : reduction > 0 
+                    ? `${reduction.toFixed(1)}% smaller` 
+                    : `${Math.abs(reduction).toFixed(1)}% larger`}
+              </ReductionBadge>
+            )}
+            {processingMode === 'crop' && processedSize && (
+              <ReductionBadge $reduction={0}>
+                Cropped
+              </ReductionBadge>
+            )}
           </ImageInfo>
         </ImageCard>
       )}

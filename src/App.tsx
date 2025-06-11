@@ -1,12 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { store } from './store';
+import { store, RootState } from './store';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ImageDropzone from './components/ImageDropzone';
 import ImagePreview from './components/ImagePreview';
 import CompressionControls from './components/CompressionControls';
+import ImageCropper from './components/ImageCropper';
 import FormatSelector from './components/FormatSelector';
 
 const AppContainer = styled.div`
@@ -30,19 +32,37 @@ const Main = styled.main`
   justify-content: center;
 `;
 
+const AppContent: React.FC = () => {
+  const { processingMode } = useSelector((state: RootState) => state.image);
+
+  return (
+    <AppContainer>
+      <Header />
+      <FormatSelector />
+      <Main>
+        <ImageDropzone />
+        {processingMode === 'compress' && (
+          <>
+            <ImagePreview />
+            <CompressionControls />
+          </>
+        )}
+        {processingMode === 'crop' && (
+          <>
+            <ImageCropper />
+            <ImagePreview />
+          </>
+        )}
+      </Main>
+      <Footer />
+    </AppContainer>
+  );
+};
+
 function App() {
   return (
     <Provider store={store}>
-      <AppContainer>
-        <Header />
-        <FormatSelector />
-        <Main>
-          <ImageDropzone />
-          <ImagePreview />
-          <CompressionControls />
-        </Main>
-        <Footer />
-      </AppContainer>
+      <AppContent />
     </Provider>
   );
 }

@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Image, Crop, Maximize, Download } from 'react-feather';
+import { RootState } from '../store';
+import { setProcessingMode, ProcessingMode } from '../store/imageSlice';
 
 const FormatSelectorContainer = styled.div`
   display: flex;
@@ -10,11 +13,11 @@ const FormatSelectorContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const FormatOption = styled.div<{ $active?: boolean }>`
+const FormatOption = styled.div<{ $active?: boolean; $clickable?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: ${props => props.$active ? 'pointer' : 'default'};
+  cursor: ${props => props.$clickable ? 'pointer' : 'default'};
   opacity: ${props => props.$active ? 1 : 0.7};
   transition: all 0.2s ease;
   position: relative;
@@ -22,7 +25,7 @@ const FormatOption = styled.div<{ $active?: boolean }>`
   width: 85px;
   
   &:hover {
-    transform: ${props => props.$active ? 'translateY(-5px)' : 'none'};
+    transform: ${props => props.$clickable ? 'translateY(-5px)' : 'none'};
   }
 `;
 
@@ -64,40 +67,57 @@ const ComingSoonBadge = styled.div`
 `;
 
 const FormatSelector: React.FC = () => {
-  return (
-    <FormatSelectorContainer>
-      <FormatOption $active={true}>
-        <IconContainer $active={true}>
-          <Image size={24} strokeWidth={2} />
-        </IconContainer>
-        <FormatLabel>Compress</FormatLabel>
-      </FormatOption>
-      
-      <FormatOption>
-        <IconContainer>
-          <Crop size={24} strokeWidth={2} />
-        </IconContainer>
-        <FormatLabel>Image Crop</FormatLabel>
-        <ComingSoonBadge>Coming Soon</ComingSoonBadge>
-      </FormatOption>
-      
-      <FormatOption>
-        <IconContainer>
-          <Maximize size={24} strokeWidth={2} />
-        </IconContainer>
-        <FormatLabel>Resize</FormatLabel>
-        <ComingSoonBadge>Coming Soon</ComingSoonBadge>
-      </FormatOption>
-      
-      <FormatOption>
-        <IconContainer>
-          <Download size={24} strokeWidth={2} />
-        </IconContainer>
-        <FormatLabel>Convert Format</FormatLabel>
-        <ComingSoonBadge>Coming Soon</ComingSoonBadge>
-      </FormatOption>
-    </FormatSelectorContainer>
-  );
+  const dispatch = useDispatch();
+  const { processingMode } = useSelector((state: RootState) => state.image);
+
+  const handleModeSelect = (mode: ProcessingMode) => {
+    // Only allow compress and crop for now
+    if (mode === 'compress' || mode === 'crop') {
+      dispatch(setProcessingMode(mode));
+    }
+  };
+
+      return (
+      <FormatSelectorContainer>
+        <FormatOption 
+          $active={processingMode === 'compress'}
+          $clickable={true}
+          onClick={() => handleModeSelect('compress')}
+        >
+          <IconContainer $active={processingMode === 'compress'}>
+            <Image size={24} strokeWidth={2} />
+          </IconContainer>
+          <FormatLabel>Compress</FormatLabel>
+        </FormatOption>
+        
+        <FormatOption 
+          $active={processingMode === 'crop'}
+          $clickable={true}
+          onClick={() => handleModeSelect('crop')}
+        >
+          <IconContainer $active={processingMode === 'crop'}>
+            <Crop size={24} strokeWidth={2} />
+          </IconContainer>
+          <FormatLabel>Image Crop</FormatLabel>
+        </FormatOption>
+        
+        <FormatOption $clickable={false}>
+          <IconContainer>
+            <Maximize size={24} strokeWidth={2} />
+          </IconContainer>
+          <FormatLabel>Resize</FormatLabel>
+          <ComingSoonBadge>Coming Soon</ComingSoonBadge>
+        </FormatOption>
+        
+        <FormatOption $clickable={false}>
+          <IconContainer>
+            <Download size={24} strokeWidth={2} />
+          </IconContainer>
+          <FormatLabel>Convert Format</FormatLabel>
+          <ComingSoonBadge>Coming Soon</ComingSoonBadge>
+        </FormatOption>
+      </FormatSelectorContainer>
+    );
 };
 
 export default FormatSelector; 
