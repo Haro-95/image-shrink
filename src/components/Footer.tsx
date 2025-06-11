@@ -24,9 +24,11 @@ const GitHubLink = styled.a`
 `;
 
 const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+  
   return (
     <FooterContainer>
-      <Copyright>© 2023 ImageShrink - Free, fast image compression</Copyright>
+      <Copyright>© {currentYear} ImageShrink - Free, fast image compression</Copyright>
       <div>
         <GitHubLink href="https://github.com/Haro-95/image-shrink" target="_blank" rel="noopener noreferrer">
           View on GitHub
